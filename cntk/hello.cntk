@@ -1,0 +1,26 @@
+BrainScriptNetworkBuilder = {
+
+    # sample and label dimensions
+    SDim = $dimension$      defined as 2 outside
+    LDim = 1
+
+    features = Input {SDim}
+    labels   = Input {LDim}
+
+    # parameters to learn
+    b = ParameterTensor {LDim}         # bias
+    w = ParameterTensor {(LDim:SDim)}  # weights
+
+    # operations
+    p = Sigmoid (w * features + b)
+
+    lr = Logistic (labels, p)
+    err = SquareError (labels, p)
+
+    # root nodes
+    featureNodes    = (features)
+    labelNodes      = (labels)
+    criterionNodes  = (lr)
+    evaluationNodes = (err)
+    outputNodes     = (p)
+}
